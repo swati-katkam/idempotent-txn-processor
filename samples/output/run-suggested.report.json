@@ -1,0 +1,144 @@
+{
+  "generatedAt": "2026-11-01T11:33:44.077211800Z",
+  "requestsReceived": 6,
+  "requestsByFinalStatus": {
+    "RECEIVED": 0,
+    "PENDING": 0,
+    "PROCESSING": 0,
+    "RETRY_PENDING": 0,
+    "PROCESSED": 4,
+    "DUPLICATE": 1,
+    "REJECTED": 1,
+    "FAILED": 0
+  },
+  "transactionsByStatus": {
+    "RECEIVED": 0,
+    "PENDING": 0,
+    "PROCESSING": 0,
+    "RETRY_PENDING": 0,
+    "PROCESSED": 4,
+    "REJECTED": 0,
+    "FAILED": 0
+  },
+  "counters": {
+    "RECEIVED": 6,
+    "ACCEPTED": 4,
+    "DUPLICATE": 1,
+    "REJECTED": 1,
+    "BUFFERED_OUT_OF_ORDER": 1,
+    "PROCESSED": 4,
+    "IDEMPOTENT_REPLAY": 0,
+    "RETRY_SCHEDULED": 1,
+    "RETRY_ATTEMPTED": 1,
+    "FAILED": 0,
+    "INTERNAL_ERROR": 0
+  },
+  "requests": [
+    {
+      "sourceRef": "transactions.csv:5",
+      "transactionId": "TXN-2002",
+      "requestId": "REQ-2",
+      "decision": "ACCEPTED",
+      "finalStatus": "PROCESSED",
+      "detail": null
+    },
+    {
+      "sourceRef": "transactions.csv:6",
+      "transactionId": "TXN-2001",
+      "requestId": "REQ-1",
+      "decision": "ACCEPTED",
+      "finalStatus": "PROCESSED",
+      "detail": null
+    },
+    {
+      "sourceRef": "transactions.csv:7",
+      "transactionId": "TXN-2002",
+      "requestId": "REQ-2-DUP",
+      "decision": "DUPLICATE",
+      "finalStatus": "DUPLICATE",
+      "detail": "matchedOn=TRANSACTION_ID originalStatus=PROCESSED"
+    },
+    {
+      "sourceRef": "transactions.csv:8",
+      "transactionId": "TXN-2003",
+      "requestId": "REQ-3",
+      "decision": "ACCEPTED",
+      "finalStatus": "PROCESSED",
+      "detail": null
+    },
+    {
+      "sourceRef": "transactions.csv:9",
+      "transactionId": "TXN-2004",
+      "requestId": "REQ-4",
+      "decision": "REJECTED",
+      "finalStatus": "REJECTED",
+      "detail": "amount:MUST_BE_POSITIVE"
+    },
+    {
+      "sourceRef": "transactions.csv:10",
+      "transactionId": "TXN-2005",
+      "requestId": "REQ-5",
+      "decision": "ACCEPTED",
+      "finalStatus": "PROCESSED",
+      "detail": null
+    }
+  ],
+  "transactions": [
+    {
+      "transactionId": "TXN-2001",
+      "account": "****201",
+      "type": "CREDIT",
+      "sequence": 1,
+      "status": "PROCESSED",
+      "attempts": 1,
+      "reason": null,
+      "lifecycle": "RECEIVED>PROCESSING>PROCESSED"
+    },
+    {
+      "transactionId": "TXN-2002",
+      "account": "****201",
+      "type": "DEBIT",
+      "sequence": 2,
+      "status": "PROCESSED",
+      "attempts": 1,
+      "reason": null,
+      "lifecycle": "RECEIVED>PENDING>PROCESSING>PROCESSED"
+    },
+    {
+      "transactionId": "TXN-2003",
+      "account": "****201",
+      "type": "CREDIT",
+      "sequence": 3,
+      "status": "PROCESSED",
+      "attempts": 1,
+      "reason": null,
+      "lifecycle": "RECEIVED>PROCESSING>PROCESSED"
+    },
+    {
+      "transactionId": "TXN-2005",
+      "account": "****203",
+      "type": "CREDIT",
+      "sequence": 5,
+      "status": "PROCESSED",
+      "attempts": 2,
+      "reason": null,
+      "lifecycle": "RECEIVED>PROCESSING>RETRY_PENDING>PROCESSING>PROCESSED"
+    }
+  ],
+  "rejected": [
+    {
+      "sourceRef": "transactions.csv:9",
+      "transactionId": "TXN-2004",
+      "requestId": "REQ-4",
+      "reasons": [
+        "amount:MUST_BE_POSITIVE"
+      ],
+      "rejectedAt": "2026-11-01T11:33:43.963386200Z"
+    }
+  ],
+  "missingSequences": {},
+  "balances": {
+    "****201 USD": "85",
+    "****203 USD": "500"
+  }
+}

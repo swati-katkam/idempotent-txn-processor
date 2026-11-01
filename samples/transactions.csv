@@ -1,0 +1,10 @@
+# L2 suggested test data (section 9.8), in the given arrival order.
+# Currency is not in the brief; USD is assumed. TXN-2005's transient failure comes from
+# simulation.faults in application.properties.
+transactionId,requestId,sequenceNumber,accountId,transactionType,amount,currency,eventTime,originalTransactionId
+TXN-2002,REQ-2,2,ACC-201,DEBIT,40,USD,2026-11-01T09:00:02Z,
+TXN-2001,REQ-1,1,ACC-201,CREDIT,100,USD,2026-11-01T09:00:01Z,
+TXN-2002,REQ-2-DUP,2,ACC-201,DEBIT,40,USD,2026-11-01T09:00:02Z,
+TXN-2003,REQ-3,3,ACC-201,CREDIT,25,USD,2026-11-01T09:00:03Z,
+TXN-2004,REQ-4,4,ACC-202,DEBIT,-10,USD,2026-11-01T09:00:04Z,
+TXN-2005,REQ-5,5,ACC-203,CREDIT,500,USD,2026-11-01T09:00:05Z,

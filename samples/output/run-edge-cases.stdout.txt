@@ -1,0 +1,42 @@
+====================================================================================================
+ TRANSACTION PROCESSING SUMMARY  (generated 2026-11-01T11:33:44.803987500Z)
+====================================================================================================
+ Requests received : 10
+ Requests by final status : PENDING=1  PROCESSED=3  DUPLICATE=1  REJECTED=3  FAILED=2
+ Unique transactions by status : PENDING=1  PROCESSED=3  FAILED=2
+ Event counters : RECEIVED=10  ACCEPTED=6  DUPLICATE=1  REJECTED=3  BUFFERED_OUT_OF_ORDER=4  PROCESSED=3  IDEMPOTENT_REPLAY=1  RETRY_SCHEDULED=3  RETRY_ATTEMPTED=3  FAILED=2
+
+-- Requests (arrival order) ------------------------------------------------------------------------
+ source                           txnId      requestId    decision  finalStatus   detail
+ transactions-edge-cases.csv:12   TXN-3004   REQ-34       ACCEPTED  PROCESSED     -
+ transactions-edge-cases.csv:13   TXN-3002   REQ-32       ACCEPTED  FAILED        -
+ transactions-edge-cases.csv:14   TXN-3001   REQ-31       ACCEPTED  PROCESSED     -
+ transactions-edge-cases.csv:15   TXN-3001   REQ-31       DUPLICATE DUPLICATE     matchedOn=REQUEST_ID originalStatus=PROCESSED
+ transactions-edge-cases.csv:16   TXN-3001   REQ-31-X     REJECTED  REJECTED      IDEMPOTENCY_KEY_CONFLICT
+ transactions-edge-cases.csv:17   TXN-3003   REQ-33       ACCEPTED  FAILED        -
+ transactions-edge-cases.csv:18   TXN-3005   REQ-35       ACCEPTED  PROCESSED     -
+ transactions-edge-cases.csv:19   TXN-3007   REQ-37       ACCEPTED  PENDING       -
+ transactions-edge-cases.csv:20   TXN-3008   REQ-38       REJECTED  REJECTED      currency:UNSUPPORTED_VALUE
+ transactions-edge-cases.csv:21   -          -            REJECTED  REJECTED      record:COLUMN_COUNT_MISMATCH
+
+-- Transactions (sequence order) ------------------------------------------------------------------
+ txnId      account  type       seq status         att  reason                       lifecycle
+ TXN-3001   ****301  CREDIT       1 PROCESSED        1  -                            RECEIVED>PROCESSING>PROCESSED
+ TXN-3002   ****301  DEBIT        2 FAILED           1  INSUFFICIENT_FUNDS           RECEIVED>PENDING>PROCESSING>FAILED
+ TXN-3003   ****302  CREDIT       3 FAILED           3  RETRIES_EXHAUSTED:TRANSIENT_POSTING_FAILURE RECEIVED>PROCESSING>RETRY_PENDING>PROCESSING>RETRY_PENDING>PROCESSING>FAILED
+ TXN-3004   ****301  DEBIT        4 PROCESSED        2  ALREADY_APPLIED              RECEIVED>PENDING>PROCESSING>RETRY_PENDING>PROCESSING>PROCESSED
+ TXN-3005   ****301  REVERSAL     5 PROCESSED        1  -                            RECEIVED>PENDING>PROCESSING>PROCESSED
+ TXN-3007   ****301  CREDIT       7 PENDING          0  AWAITING_EARLIER_SEQUENCE    RECEIVED>PENDING
+
+-- Rejected / dead-lettered ------------------------------------------------------------------------
+ transactions-edge-cases.csv:16   txnId=TXN-3001 requestId=REQ-31-X reasons=IDEMPOTENCY_KEY_CONFLICT
+ transactions-edge-cases.csv:20   txnId=TXN-3008 requestId=REQ-38 reasons=currency:UNSUPPORTED_VALUE
+ transactions-edge-cases.csv:21   txnId=- requestId=- reasons=record:COLUMN_COUNT_MISMATCH
+
+-- Missing sequence numbers (blocking PENDING transactions) ----------------------------------------
+ {GLOBAL=[6]}
+
+-- Balances (masked) -------------------------------------------------------------------------------
+ ****301 USD      200.00
+====================================================================================================
+JSON report written to out\edge-report.json

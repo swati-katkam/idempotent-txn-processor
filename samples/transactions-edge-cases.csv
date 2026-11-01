@@ -1,0 +1,21 @@
+# Wider edge-case run. Use with:
+#   --fault TXN-3003:5:BEFORE_COMMIT --fault TXN-3004:1:AFTER_COMMIT
+# Expected:
+#   TXN-3001 PROCESSED  (exact replay REQ-31 -> DUPLICATE; same id + different amount -> REJECTED conflict)
+#   TXN-3002 FAILED     INSUFFICIENT_FUNDS (business rule, not retried)
+#   TXN-3003 FAILED     RETRIES_EXHAUSTED after 3 attempts, and does not block sequence 4
+#   TXN-3004 PROCESSED  first attempt commits but the ack is lost; the retry sees ALREADY_APPLIED, so one posting only
+#   TXN-3005 PROCESSED  reversal of TXN-3004
+#   TXN-3007 PENDING    sequence 6 never arrives -> reported as a missing sequence
+#   line with bad currency and the malformed row -> REJECTED; the bad-currency row frees sequence 8
+transactionId,requestId,sequenceNumber,accountId,transactionType,amount,currency,eventTime,originalTransactionId
+TXN-3004,REQ-34,4,ACC-301,DEBIT,20.50,USD,2026-11-01T09:10:04Z,
+TXN-3002,REQ-32,2,ACC-301,DEBIT,500,USD,2026-11-01T09:10:02Z,
+TXN-3001,REQ-31,1,ACC-301,CREDIT,200,USD,2026-11-01T09:10:01Z,
+TXN-3001,REQ-31,1,ACC-301,CREDIT,200,USD,2026-11-01T09:10:01Z,
+TXN-3001,REQ-31-X,1,ACC-301,CREDIT,999,USD,2026-11-01T09:10:01Z,
+TXN-3003,REQ-33,3,ACC-302,CREDIT,75,USD,2026-11-01T09:10:03Z,
+TXN-3005,REQ-35,5,ACC-301,REVERSAL,20.50,USD,2026-11-01T09:10:05Z,TXN-3004
+TXN-3007,REQ-37,7,ACC-301,CREDIT,10,USD,2026-11-01T09:10:07Z,
+TXN-3008,REQ-38,8,ACC-303,CREDIT,10,XYZ,2026-11-01T09:10:08Z,
+this,row,is,malformed

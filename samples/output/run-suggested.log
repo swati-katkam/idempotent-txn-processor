@@ -1,0 +1,16 @@
+2026-11-01T11:33:43.904746600Z INFO    logger=TransactionWorker thread=23 event=WORKER_STARTED batchSize=50 idlePollMs=200
+2026-11-01T11:33:43.937330Z INFO    logger=TransactionProcessor thread=23 event=TXN_PENDING txnId=TXN-2002 partition=GLOBAL sequence=2 waitingFor=1
+2026-11-01T11:33:43.939328900Z INFO    logger=TransactionProcessor thread=23 event=TXN_PROCESSING txnId=TXN-2001 attempt=1 account=****201 type=CREDIT sequence=1
+2026-11-01T11:33:43.951384900Z INFO    logger=TransactionProcessor thread=23 event=TXN_PROCESSED txnId=TXN-2001 attempt=1 posting=APPLIED
+2026-11-01T11:33:43.952384500Z INFO    logger=TransactionProcessor thread=23 event=TXN_RELEASED txnId=TXN-2002 unblockedBy=TXN-2001
+2026-11-01T11:33:43.952384500Z INFO    logger=TransactionProcessor thread=23 event=TXN_PROCESSING txnId=TXN-2002 attempt=1 account=****201 type=DEBIT sequence=2
+2026-11-01T11:33:43.957386900Z INFO    logger=TransactionProcessor thread=23 event=TXN_PROCESSED txnId=TXN-2002 attempt=1 posting=APPLIED
+2026-11-01T11:33:43.960385700Z INFO    logger=TransactionProcessor thread=23 event=TXN_DUPLICATE txnId=TXN-2002 requestId=REQ-2-DUP matchedOn=TRANSACTION_ID originalStatus=PROCESSED
+2026-11-01T11:33:43.961385400Z INFO    logger=TransactionProcessor thread=23 event=TXN_PROCESSING txnId=TXN-2003 attempt=1 account=****201 type=CREDIT sequence=3
+2026-11-01T11:33:43.961385400Z INFO    logger=TransactionProcessor thread=23 event=TXN_PROCESSED txnId=TXN-2003 attempt=1 posting=APPLIED
+2026-11-01T11:33:43.963386200Z WARNING logger=TransactionProcessor thread=23 event=TXN_REJECTED source=transactions.csv:9 txnId=TXN-2004 requestId=REQ-4 reasons=amount:MUST_BE_POSITIVE
+2026-11-01T11:33:43.964387400Z INFO    logger=TransactionProcessor thread=23 event=TXN_PROCESSING txnId=TXN-2005 attempt=1 account=****203 type=CREDIT sequence=5
+2026-11-01T11:33:43.965386200Z WARNING logger=TransactionProcessor thread=23 event=TXN_RETRY_SCHEDULED txnId=TXN-2005 attempt=1 maxAttempts=3 backoffMs=100 error=TRANSIENT_POSTING_FAILURE
+2026-11-01T11:33:44.065209300Z INFO    logger=TransactionProcessor thread=23 event=TXN_PROCESSING txnId=TXN-2005 attempt=2 account=****203 type=CREDIT sequence=5
+2026-11-01T11:33:44.066204300Z INFO    logger=TransactionProcessor thread=23 event=TXN_PROCESSED txnId=TXN-2005 attempt=2 posting=APPLIED
+2026-11-01T11:33:44.066204300Z INFO    logger=TransactionWorker thread=23 event=WORKER_STOPPED reason=SOURCE_DRAINED

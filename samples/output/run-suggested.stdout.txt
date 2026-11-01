@@ -1,0 +1,35 @@
+====================================================================================================
+ TRANSACTION PROCESSING SUMMARY  (generated 2026-11-01T11:33:44.077211800Z)
+====================================================================================================
+ Requests received : 6
+ Requests by final status : PROCESSED=4  DUPLICATE=1  REJECTED=1
+ Unique transactions by status : PROCESSED=4
+ Event counters : RECEIVED=6  ACCEPTED=4  DUPLICATE=1  REJECTED=1  BUFFERED_OUT_OF_ORDER=1  PROCESSED=4  RETRY_SCHEDULED=1  RETRY_ATTEMPTED=1
+
+-- Requests (arrival order) ------------------------------------------------------------------------
+ source                           txnId      requestId    decision  finalStatus   detail
+ transactions.csv:5               TXN-2002   REQ-2        ACCEPTED  PROCESSED     -
+ transactions.csv:6               TXN-2001   REQ-1        ACCEPTED  PROCESSED     -
+ transactions.csv:7               TXN-2002   REQ-2-DUP    DUPLICATE DUPLICATE     matchedOn=TRANSACTION_ID originalStatus=PROCESSED
+ transactions.csv:8               TXN-2003   REQ-3        ACCEPTED  PROCESSED     -
+ transactions.csv:9               TXN-2004   REQ-4        REJECTED  REJECTED      amount:MUST_BE_POSITIVE
+ transactions.csv:10              TXN-2005   REQ-5        ACCEPTED  PROCESSED     -
+
+-- Transactions (sequence order) ------------------------------------------------------------------
+ txnId      account  type       seq status         att  reason                       lifecycle
+ TXN-2001   ****201  CREDIT       1 PROCESSED        1  -                            RECEIVED>PROCESSING>PROCESSED
+ TXN-2002   ****201  DEBIT        2 PROCESSED        1  -                            RECEIVED>PENDING>PROCESSING>PROCESSED
+ TXN-2003   ****201  CREDIT       3 PROCESSED        1  -                            RECEIVED>PROCESSING>PROCESSED
+ TXN-2005   ****203  CREDIT       5 PROCESSED        2  -                            RECEIVED>PROCESSING>RETRY_PENDING>PROCESSING>PROCESSED
+
+-- Rejected / dead-lettered ------------------------------------------------------------------------
+ transactions.csv:9               txnId=TXN-2004 requestId=REQ-4 reasons=amount:MUST_BE_POSITIVE
+
+-- Missing sequence numbers (blocking PENDING transactions) ----------------------------------------
+ none
+
+-- Balances (masked) -------------------------------------------------------------------------------
+ ****201 USD      85
+ ****203 USD      500
+====================================================================================================
+JSON report written to out\processing-report.json

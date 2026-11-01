@@ -1,0 +1,217 @@
+{
+  "generatedAt": "2026-11-01T11:33:44.803987500Z",
+  "requestsReceived": 10,
+  "requestsByFinalStatus": {
+    "RECEIVED": 0,
+    "PENDING": 1,
+    "PROCESSING": 0,
+    "RETRY_PENDING": 0,
+    "PROCESSED": 3,
+    "DUPLICATE": 1,
+    "REJECTED": 3,
+    "FAILED": 2
+  },
+  "transactionsByStatus": {
+    "RECEIVED": 0,
+    "PENDING": 1,
+    "PROCESSING": 0,
+    "RETRY_PENDING": 0,
+    "PROCESSED": 3,
+    "REJECTED": 0,
+    "FAILED": 2
+  },
+  "counters": {
+    "RECEIVED": 10,
+    "ACCEPTED": 6,
+    "DUPLICATE": 1,
+    "REJECTED": 3,
+    "BUFFERED_OUT_OF_ORDER": 4,
+    "PROCESSED": 3,
+    "IDEMPOTENT_REPLAY": 1,
+    "RETRY_SCHEDULED": 3,
+    "RETRY_ATTEMPTED": 3,
+    "FAILED": 2,
+    "INTERNAL_ERROR": 0
+  },
+  "requests": [
+    {
+      "sourceRef": "transactions-edge-cases.csv:12",
+      "transactionId": "TXN-3004",
+      "requestId": "REQ-34",
+      "decision": "ACCEPTED",
+      "finalStatus": "PROCESSED",
+      "detail": null
+    },
+    {
+      "sourceRef": "transactions-edge-cases.csv:13",
+      "transactionId": "TXN-3002",
+      "requestId": "REQ-32",
+      "decision": "ACCEPTED",
+      "finalStatus": "FAILED",
+      "detail": null
+    },
+    {
+      "sourceRef": "transactions-edge-cases.csv:14",
+      "transactionId": "TXN-3001",
+      "requestId": "REQ-31",
+      "decision": "ACCEPTED",
+      "finalStatus": "PROCESSED",
+      "detail": null
+    },
+    {
+      "sourceRef": "transactions-edge-cases.csv:15",
+      "transactionId": "TXN-3001",
+      "requestId": "REQ-31",
+      "decision": "DUPLICATE",
+      "finalStatus": "DUPLICATE",
+      "detail": "matchedOn=REQUEST_ID originalStatus=PROCESSED"
+    },
+    {
+      "sourceRef": "transactions-edge-cases.csv:16",
+      "transactionId": "TXN-3001",
+      "requestId": "REQ-31-X",
+      "decision": "REJECTED",
+      "finalStatus": "REJECTED",
+      "detail": "IDEMPOTENCY_KEY_CONFLICT"
+    },
+    {
+      "sourceRef": "transactions-edge-cases.csv:17",
+      "transactionId": "TXN-3003",
+      "requestId": "REQ-33",
+      "decision": "ACCEPTED",
+      "finalStatus": "FAILED",
+      "detail": null
+    },
+    {
+      "sourceRef": "transactions-edge-cases.csv:18",
+      "transactionId": "TXN-3005",
+      "requestId": "REQ-35",
+      "decision": "ACCEPTED",
+      "finalStatus": "PROCESSED",
+      "detail": null
+    },
+    {
+      "sourceRef": "transactions-edge-cases.csv:19",
+      "transactionId": "TXN-3007",
+      "requestId": "REQ-37",
+      "decision": "ACCEPTED",
+      "finalStatus": "PENDING",
+      "detail": null
+    },
+    {
+      "sourceRef": "transactions-edge-cases.csv:20",
+      "transactionId": "TXN-3008",
+      "requestId": "REQ-38",
+      "decision": "REJECTED",
+      "finalStatus": "REJECTED",
+      "detail": "currency:UNSUPPORTED_VALUE"
+    },
+    {
+      "sourceRef": "transactions-edge-cases.csv:21",
+      "transactionId": null,
+      "requestId": null,
+      "decision": "REJECTED",
+      "finalStatus": "REJECTED",
+      "detail": "record:COLUMN_COUNT_MISMATCH"
+    }
+  ],
+  "transactions": [
+    {
+      "transactionId": "TXN-3001",
+      "account": "****301",
+      "type": "CREDIT",
+      "sequence": 1,
+      "status": "PROCESSED",
+      "attempts": 1,
+      "reason": null,
+      "lifecycle": "RECEIVED>PROCESSING>PROCESSED"
+    },
+    {
+      "transactionId": "TXN-3002",
+      "account": "****301",
+      "type": "DEBIT",
+      "sequence": 2,
+      "status": "FAILED",
+      "attempts": 1,
+      "reason": "INSUFFICIENT_FUNDS",
+      "lifecycle": "RECEIVED>PENDING>PROCESSING>FAILED"
+    },
+    {
+      "transactionId": "TXN-3003",
+      "account": "****302",
+      "type": "CREDIT",
+      "sequence": 3,
+      "status": "FAILED",
+      "attempts": 3,
+      "reason": "RETRIES_EXHAUSTED:TRANSIENT_POSTING_FAILURE",
+      "lifecycle": "RECEIVED>PROCESSING>RETRY_PENDING>PROCESSING>RETRY_PENDING>PROCESSING>FAILED"
+    },
+    {
+      "transactionId": "TXN-3004",
+      "account": "****301",
+      "type": "DEBIT",
+      "sequence": 4,
+      "status": "PROCESSED",
+      "attempts": 2,
+      "reason": "ALREADY_APPLIED",
+      "lifecycle": "RECEIVED>PENDING>PROCESSING>RETRY_PENDING>PROCESSING>PROCESSED"
+    },
+    {
+      "transactionId": "TXN-3005",
+      "account": "****301",
+      "type": "REVERSAL",
+      "sequence": 5,
+      "status": "PROCESSED",
+      "attempts": 1,
+      "reason": null,
+      "lifecycle": "RECEIVED>PENDING>PROCESSING>PROCESSED"
+    },
+    {
+      "transactionId": "TXN-3007",
+      "account": "****301",
+      "type": "CREDIT",
+      "sequence": 7,
+      "status": "PENDING",
+      "attempts": 0,
+      "reason": "AWAITING_EARLIER_SEQUENCE",
+      "lifecycle": "RECEIVED>PENDING"
+    }
+  ],
+  "rejected": [
+    {
+      "sourceRef": "transactions-edge-cases.csv:16",
+      "transactionId": "TXN-3001",
+      "requestId": "REQ-31-X",
+      "reasons": [
+        "IDEMPOTENCY_KEY_CONFLICT"
+      ],
+      "rejectedAt": "2026-11-01T11:33:44.382367400Z"
+    },
+    {
+      "sourceRef": "transactions-edge-cases.csv:20",
+      "transactionId": "TXN-3008",
+      "requestId": "REQ-38",
+      "reasons": [
+        "currency:UNSUPPORTED_VALUE"
+      ],
+      "rejectedAt": "2026-11-01T11:33:44.384367300Z"
+    },
+    {
+      "sourceRef": "transactions-edge-cases.csv:21",
+      "transactionId": null,
+      "requestId": null,
+      "reasons": [
+        "record:COLUMN_COUNT_MISMATCH"
+      ],
+      "rejectedAt": "2026-11-01T11:33:44.385367500Z"
+    }
+  ],
+  "missingSequences": {
+    "GLOBAL": [
+      6
+    ]
+  },
+  "balances": {
+    "****301 USD": "200.00"
+  }
+}
